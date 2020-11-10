@@ -1,25 +1,28 @@
 import React from 'react';
 import './login.css';
+import axios from 'axios';
 
 class Register extends React.Component {
   constructor() {
     super();
     this.state = {
       name:"",
-      email: '',
-      password: '',
+      email:'',
+      password:'',
       nameerr:'',
-      emailerr: '',
-      passworderr: ''
+      emailerr:'',
+      passworderr:''
     }
+
+    this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
   }
   valid = () => {
     var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-    var letters = /^[A-Za-z]+$/;
-    if(!this.state.name.match(letters)){
-      this.setState({nameerr:"invalide name"})
-    }
-    else if (!this.state.email.match('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')) {
+    // var letters = /^[A-Za-z]+$/;
+    // if(!this.state.name.match(letters)){
+    //   this.setState({nameerr:"invalide name"})
+    // }
+   if (!this.state.email.match('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$')) {
       this.setState({ emailerr: "invalid email" })
     }
     else if (!this.state.password.match(decimal)) {
@@ -46,9 +49,30 @@ class Register extends React.Component {
     this.setState(
       { emailerr: "", passworderr: "", nameerr:"" })
     if (this.valid()) {
-      alert("submitted successfully");
+      // alert("submitted successfully");
+
+      axios.post(`http://127.0.0.1:8000/api/register?name=${Name}&email=${Email}&password=${Password}`)
+      .then(res=>{
+        if(res.status=="200"){
+          this.handleSuccessfulAuth(res.data);
+        }else{
+          alert("something went wrong, Please Retry ")
+        }
+        console.log(res);
+        console.log(res.data);
+      })
+      .catch(error=>{
+        alert("something went wrong, Please Retry ")
+        console.log("registration error", error)
+      });
+     
     
     }
+  }
+  handleSuccessfulAuth(data){
+    //TODO update parent component
+    this.props.handleLogin(data);
+    this.props.history.push("/dashboard");
   }
 
     render(){

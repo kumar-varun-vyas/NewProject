@@ -1,5 +1,6 @@
 import React from 'react';
 import "./login.css";
+import axios from 'axios';
 
 class Login extends React.Component{
   constructor() {
@@ -10,6 +11,7 @@ class Login extends React.Component{
       emailerr: '',
       passworderr: ''
     }
+    this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
   }
 
   valid = () => {
@@ -38,13 +40,36 @@ class Login extends React.Component{
    console.log(data );
    this.setState(
     { emailerr: "", passworderr: "" })
-  if (this.valid()) {
-    alert("submitted");
-  
-  }
+    if (this.valid()) {
+    // alert("submitted");
+      
+    axios.get(`http://127.0.0.1:8000/api/login?email=${Email}&password=${Password}`)
+    .then(res=>{
+      if(res.data.token_type==="Bearer"){
+        this.handleSuccessfulAuth(res.data);
+      }
+      else{
+        alert("something went wrong, please retry");
+      }
+      console.log(res);
+     const tokenValue = res.data.access_token;
+     localStorage.setItem("tokenKey",tokenValue);
+     
 
-  
+    })
+    .catch(error=>{
+      alert("something went wrong, Please Retry ")
+      console.log("registration error", error)
+    });
+  }
+ 
+ 
  }
+ handleSuccessfulAuth(data){
+  //TODO update parent component
+  this.props.handleLogin(data);
+  this.props.history.push("/dashboard");
+}
 
   render(){
     return(
@@ -88,4 +113,5 @@ class Login extends React.Component{
 
 }
 
-export default Login;
+export default Login ;
+
