@@ -42,18 +42,21 @@ class Login extends React.Component{
     { emailerr: "", passworderr: "" })
     if (this.valid()) {
     // alert("submitted");
-      
-    axios.get(`http://127.0.0.1:8000/api/login?email=${Email}&password=${Password}`)
+      localStorage.clear();
+      console.log("pre-token", localStorage);
+
+    axios.post(`http://127.0.0.1:8000/api/login?email=${Email}&password=${Password}`)
     .then(res=>{
       if(res.data.token_type==="Bearer"){
         this.handleSuccessfulAuth(res.data);
+         const tokenValue = res.data.access_token;
+     localStorage.setItem("tokenKey",tokenValue);
       }
       else{
         alert("something went wrong, please retry");
       }
       console.log(res);
-     const tokenValue = res.data.access_token;
-     localStorage.setItem("tokenKey",tokenValue);
+    
      
 
     })

@@ -72,7 +72,7 @@ class Register extends React.Component {
   handleSuccessfulAuth(data){
     //TODO update parent component
     this.props.handleLogin(data);
-    this.props.history.push("/dashboard");
+    this.props.history.push("/login");
   }
 
     render(){

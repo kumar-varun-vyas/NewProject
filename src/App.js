@@ -4,11 +4,15 @@ import Home from './loginForm/home';
  import Login from './loginForm/Login';
 import Register from './loginForm/Register';
 import Dashboard from './loginForm/dashboard';
-import Logout from './loginForm/logout'
+import Logout from './loginForm/logout';
+//  import Logout from './loginForm/logout'
 import {
-  BrowserRouter as Router,
+  BrowserRouter ,
   Route, Link, Switch
 }from 'react-router-dom';
+
+import { withRouter } from 'react-router';
+
 
 
 
@@ -22,6 +26,7 @@ class App extends React.Component {
       user:{}
     }
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout =this.handleLogout.bind(this);
   }
 
   handleLogin(data){
@@ -30,17 +35,29 @@ class App extends React.Component {
       user : data
     })
   }
-
-
+  
+  handleLogout(e){
+    this.setState({
+      loggedInStatus : "NOT_LOGGED_IN",
+      user : {}
+    });
+    // this.props.history.push('/login')
+    // localStorage.setItem("tokenKey",null);
+  }
+ 
+  
   render(){
   return (
     <div className="App">
-    <Router>
+    <BrowserRouter>
       <div>
         <ul className="nav">
         <li>
           <Link style={{ color:"blue",display:"block", textAlign:"center",
-            textDecoration:"none" }} to="/logout">Logout</Link>
+            textDecoration:"none" }}
+            to="/logout"
+             onClick={(e)=>this.handleLogout(e)}
+             >Logout</Link>
           </li>
          
             <li>
@@ -49,11 +66,18 @@ class App extends React.Component {
           </li>
           <li>
           <Link style={{ color:"blue",display:"block", textAlign:"center",
-            textDecoration:"none",marginRight:10 }} to="/login">Login</Link>
+            textDecoration:"none",marginRight:10 }} 
+            to="/login" 
+            >Login</Link>
             </li>
          
         </ul>
         <Switch>
+        <Route
+          path="/logout"
+          component= {Logout}
+
+        ></Route>
         <Route exact 
         path="/register" 
         render = {props=>(
@@ -86,14 +110,14 @@ class App extends React.Component {
           
           ></Route>
 
-          <Route exact
+          {/* <Route exact
           path="/logout"
-          component={Logout}
-          ></Route>
+          handleLogout ={this.handleLogout}
+          ></Route> */}
          
         </Switch>
       </div>
-    </Router>
+    </BrowserRouter>
      
      {/* <Login/>
      <Register/> */}
