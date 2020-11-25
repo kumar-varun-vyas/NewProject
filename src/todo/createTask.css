@@ -1,0 +1,25 @@
+.form {
+ text-align: left;
+ margin-left: 20px;
+}
+
+.form input{
+  padding: 7px;
+  width: 40%;
+  font-size: 15px;
+  outline: none;
+  
+}
+.form input.date {
+  padding: 7px;
+  width: 20%;
+  font-size: 15px;
+  margin: 5px;
+  outline: none;
+}
+.form button{
+  padding: 5px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}

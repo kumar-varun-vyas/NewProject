@@ -43,7 +43,7 @@ class Login extends React.Component{
     if (this.valid()) {
     // alert("submitted");
       localStorage.clear();
-      console.log("pre-token", localStorage);
+    
 
     axios.post(`http://127.0.0.1:8000/api/login?email=${Email}&password=${Password}`)
     .then(res=>{
@@ -64,6 +64,7 @@ class Login extends React.Component{
       alert("something went wrong, Please Retry ")
       console.log("registration error", error)
     });
+    console.log("pre-token", localStorage);
   }
  
  
@@ -97,7 +98,7 @@ class Login extends React.Component{
            type ="text"
            placeholder = "Enter your password..."
            ref = {(input)=>this.getPassword= input}
-           onChange = {(event)=>{this.setState({password: event.target.value})}}
+           onChange ={(event)=>{this.setState({password: event.target.value})}}
 
           />
             <p style={{ color: "red", fontSize: 10 }}>{this.state. passworderr}</p>

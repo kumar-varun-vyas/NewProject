@@ -22,7 +22,7 @@ export default class Logout extends React.Component{
     const token = localStorage.getItem('tokenKey');
    console.log("token", token);
      axios
-    .post("http://127.0.0.1:8000/api/logout",{}
+    .get("http://127.0.0.1:8000/api/logout",{}
      ,{
       headers: {
           'Accept': 'application/json',
@@ -36,7 +36,7 @@ export default class Logout extends React.Component{
     
     }).catch((error)=>{
       alert(error);
-        console.log("logout error", error.response);
+        console.log("logout error", error.response)
        
     })
      
