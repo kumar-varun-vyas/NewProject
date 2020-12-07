@@ -16,10 +16,12 @@ import "./createTask.css"
 
     }
   }
-  
+  refreshPage(){
+    window.location.reload(false);
+  }
   handleSubmit=(e)=>{
      
-    e.preventDefault();
+  //  e.preventDefault();
     const Title = this.getTitle.value;
     const Status ='incomplete';
     const Date = this.getDate.value;
@@ -31,6 +33,7 @@ import "./createTask.css"
     console.log(data);
     const token = localStorage.getItem('tokenKey');
     console.log("token", token);
+   
     const baseUrl="http://127.0.0.1:8000/api/create/task";
     axios.post(baseUrl,
         
@@ -52,6 +55,8 @@ import "./createTask.css"
         console.log(response.data.data.title);
         console.log(response.data.data.id);
         console.log(response.data.data.schedule_time)
+        if(response.data.status === true){
+        this.refreshPage();}
         // { this.setState({ title :response.data.data.title})}
         // {this.setState({id:response.data.data.id})}  
          
@@ -61,8 +66,9 @@ import "./createTask.css"
       })
       .catch(error=>{
         console.log(error.response);
-        alert("title should be between 6 and 20 character ");
+        alert("title should be between 6 and 20 character and retry ");
       })
+    
 
    
     // this.getTitle.value ='';
@@ -81,14 +87,15 @@ this.getTitle.value = "";
 this.getDate.value ="";
   }
 
-  render(){
+  render(props){
 
     return(
       <React.Fragment>
       <div className="form">
 
       <h2>todo task</h2>
-      <form onSubmit={this.handleSubmit}>
+     
+
       <label>Task :- </label>
       <input type="text" 
       placeholder ="enter your title"
@@ -96,16 +103,18 @@ this.getDate.value ="";
        />
        
        <label>  Schedule Date :-</label>
-        <input className="date" type="text"
+        <input className="date" type="date"
        placeholder ="YYYY-MM-DD" 
-       ref ={(input)=>this.getDate=input}
-
-       /> 
+       
+       ref ={(input)=>this.getDate=input} /> 
       
-       <button>ADD</button>
+       <button onClick={
+         ()=>{this.handleSubmit();
+        }
+       }>ADD</button>
 
 
-      </form>
+    
      
         </div>
       </React.Fragment>

@@ -5,7 +5,9 @@ export const CheckBox = props => {
       <li>
        <input key={props.id} onClick={props.handleCheckChildElement}
         type="checkbox" defaultChecked={props.disabled||props.isChecked}
-         value={props.id}  disabled = {props.isDisabled}/> {props.id}
+         value={props.id}  disabled = {props.isDisabled}
+           onChange={props.onChange}
+         /> {props.id}
      
      
      

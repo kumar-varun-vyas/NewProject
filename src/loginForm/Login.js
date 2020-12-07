@@ -68,6 +68,7 @@ class Login extends React.Component{
   }
  
  
+ 
  }
  handleSuccessfulAuth(data){
   //TODO update parent component
@@ -95,7 +96,7 @@ class Login extends React.Component{
           <br/>
          
           <input 
-           type ="text"
+           type ="password"
            placeholder = "Enter your password..."
            ref = {(input)=>this.getPassword= input}
            onChange ={(event)=>{this.setState({password: event.target.value})}}
@@ -118,4 +119,5 @@ class Login extends React.Component{
 }
 
 export default Login ;
+
 
